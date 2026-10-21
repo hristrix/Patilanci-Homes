@@ -1,0 +1,28 @@
+plugins { id 'fabric-loom' version '1.11.8' }
+version = '1.1.1'
+group = 'net.patilanci'
+base { archivesName = 'patilanci-homes' }
+repositories { mavenCentral() }
+dependencies {
+ minecraft 'com.mojang:minecraft:1.21.10'
+ mappings 'net.fabricmc:yarn:1.21.10+build.2:v2'
+ modImplementation 'net.fabricmc:fabric-loader:0.17.3'
+ modImplementation 'net.fabricmc.fabric-api:fabric-api:0.138.4+1.21.10'
+ implementation 'org.yaml:snakeyaml:2.4'
+ include 'org.yaml:snakeyaml:2.4'
+}
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) }; withSourcesJar() }
+
+sourceSets {
+ regression {
+  compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+  runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+ }
+}
+tasks.register('homeCommandRegression', JavaExec) {
+ dependsOn regressionClasses
+ classpath = sourceSets.regression.runtimeClasspath
+ mainClass = 'net.patilanci.homes.HomeCommandsRegression'
+ javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(21) }
+}
+tasks.named('check') { dependsOn homeCommandRegression }

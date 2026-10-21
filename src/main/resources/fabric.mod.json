@@ -1,0 +1,1 @@
+{"schemaVersion":1,"id":"patilancihomes","version":"1.1.1","name":"Patilanci Homes","description":"Native server-side home dialogs with legacy-safe import.","environment":"server","entrypoints":{"main":["net.patilanci.homes.PatilanciHomes"]},"depends":{"fabricloader":">=0.17.0","minecraft":"1.21.10","java":">=21","fabric-api":"*"}}
